@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/invictask_backend/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/invictask_backend/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/invictask_backend",
+  "projects": {
+    "invictask_backend": {
+      "type": "application",
+      "root": "apps/invictask_backend",
+      "entryFile": "main",
+      "sourceRoot": "apps/invictask_backend/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/invictask_backend/tsconfig.app.json"
+      }
+    },
+    "logging-service": {
+      "type": "application",
+      "root": "apps/logging-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/logging-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/logging-service/tsconfig.app.json"
+      }
+    },
+    "org-service": {
+      "type": "application",
+      "root": "apps/org-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/org-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/org-service/tsconfig.app.json"
+      }
+    }
+  }
+}
