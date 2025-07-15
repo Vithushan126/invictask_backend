@@ -1,1 +1,85 @@
+# services:
+#   postgres:
+#     image: postgres:16.9
+#     container_name: postgres
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 123
+#       POSTGRES_DB: main_db
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+#     ports:
+#       - '5432:5432'
 
+#   auth-service:
+#     build: ./apps/auth-service
+#     ports:
+#       - "3001:3000"
+#     depends_on:
+#       - postgres
+
+#   user-service:
+#     build: ./apps/user-service
+#     ports:
+#       - "3002:3000"
+#     depends_on:
+#       - postgres
+
+#   api-gateway:
+#     build: ./apps/api-gateway
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - auth-service
+#       - user-service
+
+# volumes:
+#   pgdata:
+
+services:
+  postgres:
+    image: postgres:16.9
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: main_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - backend-network
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: apps/auth-service/Dockerfile
+    container_name: auth-service
+    depends_on:
+      - postgres
+    ports:
+      - '3001:3001'
+    networks:
+      - backend-network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api-gateway/Dockerfile
+    container_name: api-gateway
+    depends_on:
+      - auth-service
+    ports:
+      - '3000:3000'
+    networks:
+      - backend-network
+
+volumes:
+  pgdata:
+
+networks:
+  backend-network:
+    driver: bridge

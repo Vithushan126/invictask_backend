@@ -10,6 +10,42 @@
   "monorepo": true,
   "root": "apps/invictask_backend",
   "projects": {
+    "activity-service": {
+      "type": "application",
+      "root": "apps/activity-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/activity-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/activity-service/tsconfig.app.json"
+      }
+    },
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "auth-service": {
+      "type": "application",
+      "root": "apps/auth-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth-service/tsconfig.app.json"
+      }
+    },
+    "comment-service": {
+      "type": "application",
+      "root": "apps/comment-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/comment-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/comment-service/tsconfig.app.json"
+      }
+    },
     "invictask_backend": {
       "type": "application",
       "root": "apps/invictask_backend",
@@ -28,6 +64,15 @@
         "tsConfigPath": "apps/logging-service/tsconfig.app.json"
       }
     },
+    "notification-service": {
+      "type": "application",
+      "root": "apps/notification-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification-service/tsconfig.app.json"
+      }
+    },
     "org-service": {
       "type": "application",
       "root": "apps/org-service",
@@ -35,6 +80,42 @@
       "sourceRoot": "apps/org-service/src",
       "compilerOptions": {
         "tsConfigPath": "apps/org-service/tsconfig.app.json"
+      }
+    },
+    "organization-service": {
+      "type": "application",
+      "root": "apps/organization-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/organization-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/organization-service/tsconfig.app.json"
+      }
+    },
+    "project-service": {
+      "type": "application",
+      "root": "apps/project-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/project-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/project-service/tsconfig.app.json"
+      }
+    },
+    "task-service": {
+      "type": "application",
+      "root": "apps/task-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/task-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/task-service/tsconfig.app.json"
+      }
+    },
+    "user-service": {
+      "type": "application",
+      "root": "apps/user-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-service/tsconfig.app.json"
       }
     }
   }

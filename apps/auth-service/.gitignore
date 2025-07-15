@@ -12,7 +12,10 @@ dist/
 # Docker files (no need to commit docker-related files)
 .dockerignore
 Dockerfile
-docker-compose.yml
+
+# Test files
+test/
+**/*spec.ts
 
 # IDE or editor specific files
 .vscode/
