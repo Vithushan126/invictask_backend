@@ -25,6 +25,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+      - ./apps/auth-service/.env:/usr/src/app/.env 
 
   api-gateway:
     build:
