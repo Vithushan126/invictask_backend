@@ -25,7 +25,10 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-      - ./apps/auth-service/.env:/usr/src/app/.env 
+    working_dir: /usr/src/app/apps/auth-service
+    env_file:
+      - ./apps/auth-service/.env
+
 
   api-gateway:
     build:
@@ -40,6 +43,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+    working_dir: /usr/src/app/apps/api-gateway
 
 volumes:
   pgdata:
