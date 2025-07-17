@@ -1,9 +1,11 @@
-export class LoginDto {
-  username: string;
-  password: string;
+import { IsNotEmpty, IsString } from 'class-validator';
 
-  constructor(username: string, password: string) {
-    this.username = username;
-    this.password = password;
-  }
+export class LoginDto {
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
 }

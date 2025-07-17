@@ -1,53 +1,55 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from '../users/user.entity';
 import { RegisterDto } from '../dto/register.dto';
 import { LoginDto } from '../dto/login.dto';
 
-interface User {
-  username: string;
-  password: string;
-}
-
 @Injectable()
 export class AuthService {
-  private users: User[] = []; // Explicitly type the users array
-
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async register(registerDto: RegisterDto) {
-    const { username, password } = registerDto;
+    const { email, password } = registerDto;
 
-    // Check if user already exists
-    const userExists = this.users.find((user) => user.username === username);
-    if (userExists) {
-      throw new Error('User already exists');
+    const existing = await this.userRepo.findOne({ where: { email } });
+    if (existing) {
+      throw new BadRequestException('Email already exists');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser: User = { username, password: hashedPassword }; // Type the newUser
-    this.users.push(newUser);
+    const user = this.userRepo.create({ email, password: hashedPassword });
+    await this.userRepo.save(user);
 
     return { message: 'User registered successfully' };
   }
 
   async login(loginDto: LoginDto) {
-    const { username, password } = loginDto;
+    const { email, password } = loginDto;
 
-    const user = this.users.find((user) => user.username === username);
+    const user = await this.userRepo.findOne({ where: { email } });
     if (!user) {
-      throw new Error('User not found');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
-    const passwordMatches = await bcrypt.compare(password, user.password);
-    if (!passwordMatches) {
-      throw new Error('Invalid credentials');
+    const passwordValid = await bcrypt.compare(password, user.password);
+    if (!passwordValid) {
+      throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { username: user.username };
-    const accessToken = this.jwtService.sign(payload);
+    const token = this.jwtService.sign({ email: user.email });
 
-    return { accessToken };
+    return { accessToken: token };
+  }
+
+  async findAll() {
+    return this.userRepo.find();
   }
 }
+
